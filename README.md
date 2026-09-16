@@ -38,12 +38,28 @@ without it.
 
 ## Data storage
 
-This is a single-user, local-first tool: profile and generated post data is
-stored in `data/app-data.json` on disk (seeded with sample data). That's
-fine for local use or a single personal deployment, but on serverless hosts
-(e.g. Vercel) the filesystem isn't persistent across deployments — swap in a
-real database (e.g. Postgres via Prisma) before using this for more than one
-person or a production deployment you care about not resetting.
+This is a single-user tool. Profile and generated post data lives in one of
+two places, chosen automatically based on environment:
+
+- **Locally** (`npm run dev` / `npm run start`, no Blob store attached):
+  stored in `data/app-data.json` on disk, seeded with sample data.
+- **On Vercel with a Blob store attached**: stored in [Vercel
+  Blob](https://vercel.com/docs/storage/vercel-blob) instead. This isn't
+  optional on Vercel — serverless functions there run on a read-only
+  filesystem (only `/tmp` is writable, and it isn't shared or persistent
+  across invocations), so writing to a local JSON file silently can't work
+  in that environment.
+
+**To enable saving on a Vercel deployment:** in your Vercel project, go to
+*Storage → Create Database → Blob* and connect it to the project. Vercel
+injects a `BLOB_READ_WRITE_TOKEN` environment variable automatically once
+it's connected — the app detects that and switches storage backends with no
+further config. Redeploy after attaching the store.
+
+Note: Vercel Blob is CDN-backed, so there's a small window (up to ~1 minute,
+the platform's cache floor) after saving before the public portfolio is
+guaranteed to reflect the change everywhere — it's usually much faster than
+that in practice.
 
 ## Tech stack
 
