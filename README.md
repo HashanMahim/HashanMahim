@@ -12,6 +12,10 @@ brand tool without wrangling a full CMS.
   experience, and coursework once.
 - **Public portfolio page** (`/portfolio`) — a clean, shareable page
   generated from your profile.
+- **Appearance customization** — pick an accent color, font pairing
+  (sans/serif/mono), light/dark/system color mode, one of three layout
+  templates (classic, modern card-based, or timeline), and which sections
+  show and in what order — all from the dashboard, no code required.
 - **LinkedIn post generator** — pick a project, internship, or coursework
   entry (or write a custom win) and get an AI-drafted LinkedIn post in your
   chosen tone, ready to copy and paste.

@@ -6,17 +6,35 @@
     "email": "jordan.rivera@example.edu",
     "location": "Austin, TX",
     "links": [
-      { "id": "l1", "label": "GitHub", "url": "https://github.com/example" },
-      { "id": "l2", "label": "LinkedIn", "url": "https://linkedin.com/in/example" }
+      {
+        "id": "l1",
+        "label": "GitHub",
+        "url": "https://github.com/example"
+      },
+      {
+        "id": "l2",
+        "label": "LinkedIn",
+        "url": "https://linkedin.com/in/example"
+      }
     ],
-    "skills": ["TypeScript", "React", "Python", "SQL", "Git"],
+    "skills": [
+      "TypeScript",
+      "React",
+      "Python",
+      "SQL",
+      "Git"
+    ],
     "projects": [
       {
         "id": "p1",
         "title": "Campus Event Finder",
         "description": "A web app that aggregates events from student org pages into one searchable calendar. Built with Next.js and PostgreSQL, used by 200+ students.",
         "link": "https://github.com/example/campus-events",
-        "tags": ["Next.js", "PostgreSQL", "TailwindCSS"]
+        "tags": [
+          "Next.js",
+          "PostgreSQL",
+          "TailwindCSS"
+        ]
       }
     ],
     "experience": [
@@ -36,7 +54,19 @@
         "institution": "State University",
         "description": "Implemented core data structures from scratch and analyzed algorithmic complexity across course projects."
       }
-    ]
+    ],
+    "theme": {
+      "accentColor": "#2563eb",
+      "fontPairing": "sans",
+      "colorMode": "system",
+      "template": "classic",
+      "sectionOrder": [
+        "projects",
+        "experience",
+        "coursework"
+      ],
+      "hiddenSections": []
+    }
   },
   "posts": []
 }

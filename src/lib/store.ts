@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import type { AppData } from "./types";
-import { emptyProfile } from "./types";
+import { emptyProfile, defaultTheme } from "./types";
 
 const DATA_FILE = path.join(process.cwd(), "data", "app-data.json");
 
@@ -15,7 +15,11 @@ export async function readData(): Promise<AppData> {
     const raw = await fs.readFile(DATA_FILE, "utf-8");
     const parsed = JSON.parse(raw) as Partial<AppData>;
     return {
-      profile: { ...emptyProfile, ...parsed.profile },
+      profile: {
+        ...emptyProfile,
+        ...parsed.profile,
+        theme: { ...defaultTheme, ...parsed.profile?.theme },
+      },
       posts: parsed.posts ?? [],
     };
   } catch (err) {

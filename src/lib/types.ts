@@ -28,6 +28,21 @@ export interface CourseworkEntry {
   description: string;
 }
 
+export type SectionKey = "projects" | "experience" | "coursework";
+
+export type FontPairing = "sans" | "serif" | "mono";
+export type ColorMode = "light" | "dark" | "system";
+export type PortfolioTemplate = "classic" | "modern" | "timeline";
+
+export interface ThemeSettings {
+  accentColor: string;
+  fontPairing: FontPairing;
+  colorMode: ColorMode;
+  template: PortfolioTemplate;
+  sectionOrder: SectionKey[];
+  hiddenSections: SectionKey[];
+}
+
 export interface Profile {
   name: string;
   headline: string;
@@ -39,6 +54,7 @@ export interface Profile {
   projects: ProjectEntry[];
   experience: ExperienceEntry[];
   coursework: CourseworkEntry[];
+  theme: ThemeSettings;
 }
 
 export type PostSourceType = "project" | "experience" | "coursework" | "custom";
@@ -57,6 +73,15 @@ export interface AppData {
   posts: GeneratedPost[];
 }
 
+export const defaultTheme: ThemeSettings = {
+  accentColor: "#2563eb",
+  fontPairing: "sans",
+  colorMode: "system",
+  template: "classic",
+  sectionOrder: ["projects", "experience", "coursework"],
+  hiddenSections: [],
+};
+
 export const emptyProfile: Profile = {
   name: "",
   headline: "",
@@ -68,4 +93,5 @@ export const emptyProfile: Profile = {
   projects: [],
   experience: [],
   coursework: [],
+  theme: defaultTheme,
 };

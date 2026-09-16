@@ -24,3 +24,38 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Portfolio theme tokens, driven by [data-color-mode] on the page wrapper. */
+[data-color-mode="light"] {
+  --pb-bg: #ffffff;
+  --pb-surface: #f8fafc;
+  --pb-text: #0f172a;
+  --pb-muted: #64748b;
+  --pb-border: #e2e8f0;
+}
+
+[data-color-mode="dark"] {
+  --pb-bg: #0b1220;
+  --pb-surface: #131c2e;
+  --pb-text: #f1f5f9;
+  --pb-muted: #94a3b8;
+  --pb-border: #1f2b40;
+}
+
+[data-color-mode="system"] {
+  --pb-bg: #ffffff;
+  --pb-surface: #f8fafc;
+  --pb-text: #0f172a;
+  --pb-muted: #64748b;
+  --pb-border: #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-color-mode="system"] {
+    --pb-bg: #0b1220;
+    --pb-surface: #131c2e;
+    --pb-text: #f1f5f9;
+    --pb-muted: #94a3b8;
+    --pb-border: #1f2b40;
+  }
+}

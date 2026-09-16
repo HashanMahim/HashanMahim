@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type {
   Profile,
   ProjectEntry,
@@ -9,18 +10,41 @@ import type {
   LinkEntry,
   GeneratedPost,
   PostSourceType,
+  ThemeSettings,
+  SectionKey,
+  FontPairing,
+  ColorMode,
+  PortfolioTemplate,
 } from "@/lib/types";
+import { contrastColor } from "@/lib/color";
 
 const inputClass =
   "w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none";
 const labelClass = "block text-xs font-medium text-slate-500 mb-1";
-const cardClass = "rounded-lg border border-slate-200 bg-white p-4 space-y-3";
+const cardClass = "rounded-xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm space-y-4";
 const sectionTitleClass = "text-lg font-semibold text-slate-900";
 const buttonClass =
   "rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50";
 const secondaryButtonClass =
   "rounded-md border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-100";
 const dangerButtonClass = "text-xs font-medium text-red-500 hover:text-red-700";
+
+const SECTION_LABELS: Record<SectionKey, string> = {
+  projects: "Projects",
+  experience: "Experience",
+  coursework: "Coursework",
+};
+
+const ACCENT_PRESETS = [
+  "#2563eb",
+  "#4f46e5",
+  "#7c3aed",
+  "#db2777",
+  "#dc2626",
+  "#ea580c",
+  "#059669",
+  "#0d9488",
+];
 
 function uid() {
   return crypto.randomUUID();
@@ -136,10 +160,10 @@ export function Dashboard({
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8 px-6 py-8">
-      <div className="flex items-center justify-between">
+    <div className="mx-auto max-w-4xl space-y-6 px-4 py-6 sm:space-y-8 sm:px-6 sm:py-8">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Your Profile</h1>
+          <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">Your Profile</h1>
           <p className="text-sm text-slate-500">
             Fill this in once — it powers your public portfolio and post drafts.
           </p>
@@ -154,7 +178,7 @@ export function Dashboard({
 
       <section className={cardClass}>
         <h2 className={sectionTitleClass}>Basics</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className={labelClass}>Full name</label>
             <input className={inputClass} value={profile.name} onChange={(e) => field("name", e.target.value)} />
@@ -191,7 +215,7 @@ export function Dashboard({
           <label className={labelClass}>Links</label>
           <div className="space-y-2">
             {profile.links.map((l) => (
-              <div key={l.id} className="flex gap-2">
+              <div key={l.id} className="flex flex-col gap-2 sm:flex-row">
                 <input
                   className={inputClass}
                   placeholder="Label (e.g. GitHub)"
@@ -204,7 +228,7 @@ export function Dashboard({
                   value={l.url}
                   onChange={(e) => updateLink(l.id, { url: e.target.value })}
                 />
-                <button className={dangerButtonClass} onClick={() => removeLink(l.id)}>
+                <button className={`${dangerButtonClass} self-start sm:self-center`} onClick={() => removeLink(l.id)}>
                   Remove
                 </button>
               </div>
@@ -249,14 +273,14 @@ export function Dashboard({
         <h2 className={sectionTitleClass}>Projects</h2>
         {profile.projects.map((p) => (
           <div key={p.id} className="space-y-2 rounded-md border border-slate-100 p-3">
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <input
                 className={inputClass}
                 placeholder="Project title"
                 value={p.title}
                 onChange={(e) => updateProject(p.id, { title: e.target.value })}
               />
-              <button className={dangerButtonClass} onClick={() => removeProject(p.id)}>
+              <button className={`${dangerButtonClass} self-start sm:self-center`} onClick={() => removeProject(p.id)}>
                 Remove
               </button>
             </div>
@@ -292,7 +316,7 @@ export function Dashboard({
         <h2 className={sectionTitleClass}>Experience</h2>
         {profile.experience.map((exp) => (
           <div key={exp.id} className="space-y-2 rounded-md border border-slate-100 p-3">
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <input
                 className={inputClass}
                 placeholder="Role"
@@ -305,11 +329,11 @@ export function Dashboard({
                 value={exp.organization}
                 onChange={(e) => updateExperience(exp.id, { organization: e.target.value })}
               />
-              <button className={dangerButtonClass} onClick={() => removeExperience(exp.id)}>
+              <button className={`${dangerButtonClass} self-start sm:self-center`} onClick={() => removeExperience(exp.id)}>
                 Remove
               </button>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <input
                 className={inputClass}
                 placeholder="Start (e.g. 2025-06)"
@@ -341,7 +365,7 @@ export function Dashboard({
         <h2 className={sectionTitleClass}>Coursework</h2>
         {profile.coursework.map((c) => (
           <div key={c.id} className="space-y-2 rounded-md border border-slate-100 p-3">
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <input
                 className={inputClass}
                 placeholder="Course title"
@@ -354,7 +378,7 @@ export function Dashboard({
                 value={c.institution}
                 onChange={(e) => updateCoursework(c.id, { institution: e.target.value })}
               />
-              <button className={dangerButtonClass} onClick={() => removeCoursework(c.id)}>
+              <button className={`${dangerButtonClass} self-start sm:self-center`} onClick={() => removeCoursework(c.id)}>
                 Remove
               </button>
             </div>
@@ -372,8 +396,201 @@ export function Dashboard({
         </button>
       </section>
 
+      <AppearanceEditor
+        theme={profile.theme}
+        onChange={(theme) => field("theme", theme)}
+      />
+
       <PostGenerator profile={profile} posts={posts} setPosts={setPosts} />
     </div>
+  );
+}
+
+function AppearanceEditor({
+  theme,
+  onChange,
+}: {
+  theme: ThemeSettings;
+  onChange: (theme: ThemeSettings) => void;
+}) {
+  const [customColor, setCustomColor] = useState(theme.accentColor);
+
+  function patch(partial: Partial<ThemeSettings>) {
+    onChange({ ...theme, ...partial });
+  }
+
+  function moveSection(key: SectionKey, direction: -1 | 1) {
+    const idx = theme.sectionOrder.indexOf(key);
+    const newIdx = idx + direction;
+    if (newIdx < 0 || newIdx >= theme.sectionOrder.length) return;
+    const next = [...theme.sectionOrder];
+    [next[idx], next[newIdx]] = [next[newIdx], next[idx]];
+    patch({ sectionOrder: next });
+  }
+
+  function toggleSection(key: SectionKey) {
+    const hidden = theme.hiddenSections.includes(key)
+      ? theme.hiddenSections.filter((k) => k !== key)
+      : [...theme.hiddenSections, key];
+    patch({ hiddenSections: hidden });
+  }
+
+  return (
+    <section className={cardClass}>
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className={sectionTitleClass}>Appearance</h2>
+          <p className="text-sm text-slate-500">
+            Customize how your public portfolio looks. Changes preview live once you hit Save.
+          </p>
+        </div>
+        <Link href="/portfolio" target="_blank" className={secondaryButtonClass}>
+          Preview ↗
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div>
+          <label className={labelClass}>Accent color</label>
+          <div className="flex flex-wrap items-center gap-2">
+            {ACCENT_PRESETS.map((c) => (
+              <button
+                key={c}
+                aria-label={`Accent color ${c}`}
+                onClick={() => {
+                  patch({ accentColor: c });
+                  setCustomColor(c);
+                }}
+                className="h-7 w-7 rounded-full ring-offset-2 transition"
+                style={{
+                  backgroundColor: c,
+                  boxShadow: theme.accentColor === c ? `0 0 0 2px ${c}` : undefined,
+                  outline: theme.accentColor === c ? "2px solid white" : undefined,
+                  outlineOffset: theme.accentColor === c ? "-3px" : undefined,
+                }}
+              />
+            ))}
+            <input
+              type="color"
+              aria-label="Custom accent color"
+              value={customColor}
+              onChange={(e) => {
+                setCustomColor(e.target.value);
+                patch({ accentColor: e.target.value });
+              }}
+              className="h-7 w-7 cursor-pointer rounded-full border border-slate-200 bg-transparent p-0"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className={labelClass}>Font pairing</label>
+          <select
+            className={inputClass}
+            aria-label="Font pairing"
+            value={theme.fontPairing}
+            onChange={(e) => patch({ fontPairing: e.target.value as FontPairing })}
+          >
+            <option value="sans">Sans (clean, modern)</option>
+            <option value="serif">Serif (editorial)</option>
+            <option value="mono">Mono (technical)</option>
+          </select>
+        </div>
+
+        <div>
+          <label className={labelClass}>Color mode</label>
+          <select
+            className={inputClass}
+            aria-label="Color mode"
+            value={theme.colorMode}
+            onChange={(e) => patch({ colorMode: e.target.value as ColorMode })}
+          >
+            <option value="system">Match visitor&apos;s system</option>
+            <option value="light">Always light</option>
+            <option value="dark">Always dark</option>
+          </select>
+        </div>
+
+        <div>
+          <label className={labelClass}>Layout template</label>
+          <select
+            className={inputClass}
+            aria-label="Layout template"
+            value={theme.template}
+            onChange={(e) => patch({ template: e.target.value as PortfolioTemplate })}
+          >
+            <option value="classic">Classic — clean, resume-style</option>
+            <option value="modern">Modern — card-based, bolder</option>
+            <option value="timeline">Timeline — vertical timeline</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label className={labelClass}>Sections</label>
+        <p className="mb-2 text-xs text-slate-400">Show, hide, and reorder the sections on your portfolio.</p>
+        <div className="space-y-2">
+          {theme.sectionOrder.map((key, idx) => {
+            const hidden = theme.hiddenSections.includes(key);
+            return (
+              <div
+                key={key}
+                className="flex items-center justify-between rounded-md border border-slate-100 px-3 py-2"
+              >
+                <label className="flex items-center gap-2 text-sm text-slate-700">
+                  <input type="checkbox" checked={!hidden} onChange={() => toggleSection(key)} />
+                  <span className={hidden ? "text-slate-400 line-through" : ""}>{SECTION_LABELS[key]}</span>
+                </label>
+                <div className="flex gap-1">
+                  <button
+                    aria-label={`Move ${SECTION_LABELS[key]} up`}
+                    className={secondaryButtonClass}
+                    disabled={idx === 0}
+                    onClick={() => moveSection(key, -1)}
+                  >
+                    ↑
+                  </button>
+                  <button
+                    aria-label={`Move ${SECTION_LABELS[key]} down`}
+                    className={secondaryButtonClass}
+                    disabled={idx === theme.sectionOrder.length - 1}
+                    onClick={() => moveSection(key, 1)}
+                  >
+                    ↓
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div>
+        <label className={labelClass}>Preview</label>
+        <div
+          className="flex items-center gap-3 rounded-lg border border-slate-100 p-4"
+          style={{ backgroundColor: theme.colorMode === "dark" ? "#0b1220" : "#ffffff" }}
+        >
+          <span
+            className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold"
+            style={{ backgroundColor: theme.accentColor, color: contrastColor(theme.accentColor) }}
+          >
+            {"Aa"}
+          </span>
+          <div>
+            <p
+              className="text-sm font-semibold"
+              style={{ color: theme.colorMode === "dark" ? "#f1f5f9" : "#0f172a" }}
+            >
+              Your name goes here
+            </p>
+            <p className="text-xs" style={{ color: theme.accentColor }}>
+              Accent color · {theme.fontPairing} font · {theme.template} layout
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -462,7 +679,7 @@ function PostGenerator({
         Pick a win from your profile (or write a custom one) and get a draft post you can copy and paste.
       </p>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div>
           <label className={labelClass}>Source</label>
           <select
@@ -537,7 +754,7 @@ function PostGenerator({
           <h3 className="text-sm font-semibold text-slate-700">Drafts</h3>
           {posts.map((post) => (
             <div key={post.id} className="rounded-md border border-slate-100 bg-slate-50 p-3">
-              <div className="mb-2 flex items-center justify-between">
+              <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <span className="text-xs font-medium text-slate-500">
                   {post.sourceTitle} · {post.tone} · {new Date(post.createdAt).toLocaleString()}
                 </span>
