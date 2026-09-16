@@ -1,0 +1,42 @@
+{
+  "profile": {
+    "name": "Jordan Rivera",
+    "headline": "CS Student @ State University | Aspiring Software Engineer",
+    "bio": "Junior studying Computer Science, passionate about building useful web apps. Looking for summer internship opportunities in software engineering.",
+    "email": "jordan.rivera@example.edu",
+    "location": "Austin, TX",
+    "links": [
+      { "id": "l1", "label": "GitHub", "url": "https://github.com/example" },
+      { "id": "l2", "label": "LinkedIn", "url": "https://linkedin.com/in/example" }
+    ],
+    "skills": ["TypeScript", "React", "Python", "SQL", "Git"],
+    "projects": [
+      {
+        "id": "p1",
+        "title": "Campus Event Finder",
+        "description": "A web app that aggregates events from student org pages into one searchable calendar. Built with Next.js and PostgreSQL, used by 200+ students.",
+        "link": "https://github.com/example/campus-events",
+        "tags": ["Next.js", "PostgreSQL", "TailwindCSS"]
+      }
+    ],
+    "experience": [
+      {
+        "id": "e1",
+        "role": "Software Engineering Intern",
+        "organization": "LocalTech Co.",
+        "startDate": "2025-06",
+        "endDate": "2025-08",
+        "description": "Built an internal dashboard used by the support team, cutting average ticket triage time by 30%."
+      }
+    ],
+    "coursework": [
+      {
+        "id": "c1",
+        "title": "Data Structures & Algorithms",
+        "institution": "State University",
+        "description": "Implemented core data structures from scratch and analyzed algorithmic complexity across course projects."
+      }
+    ]
+  },
+  "posts": []
+}
