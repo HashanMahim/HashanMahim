@@ -6,6 +6,10 @@ import { ModernTemplate } from "@/components/portfolio/ModernTemplate";
 import { TimelineTemplate } from "@/components/portfolio/TimelineTemplate";
 import Link from "next/link";
 
+// Same reasoning as src/app/page.tsx: this reads the on-disk profile at
+// request time and must not be frozen into a static build-time snapshot.
+export const dynamic = "force-dynamic";
+
 export default async function PortfolioPage() {
   const { profile } = await readData();
   const hasContent =
