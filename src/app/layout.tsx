@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Brand Builder",
+  title: "LinkedIn Brand Builder",
   description: "Turn your resume into a portfolio site and LinkedIn posts.",
 };
 

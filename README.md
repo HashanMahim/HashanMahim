@@ -1,4 +1,4 @@
-# Brand Builder
+# LinkedIn Brand Builder
 
 Turn your resume/LinkedIn info into a shareable portfolio site, and generate
 draft LinkedIn posts about your projects, internships, and coursework wins.
